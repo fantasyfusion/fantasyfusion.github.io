@@ -35,7 +35,14 @@ function loadDropdownValue() {
 }
 
 // Load the saved dropdown value when the page loads
-window.onload = loadDropdownValue;
+// window.onload = loadDropdownValue;
+
+window.onload = async () => {
+    loadDropdownValue();  // Ensures `banana` is set first
+    await refreshData();  // Initial data fetch
+    // Set up an interval to refresh the data every 10 seconds
+    setInterval(refreshData, 10000);  // Refresh data every 10,000 ms (10 seconds)
+};
 
 // Fetch User ID by Sleeper Username
 const getUserID = async (username) => {
@@ -99,31 +106,69 @@ const getPlayers = async () => {
 
 // Update the UI with Player Names
 const updateStartersInfo = (matchups, players) => {
-    const startersBody = document.getElementById("starters-body");
+    let startersBody = document.getElementById("starters-body");
     startersBody.innerHTML = ''; // Clear table before updating
 
     matchups.forEach(matchup => {
         if (matchup.roster_id == 8) {
+            var row = document.createElement('tr');
+            var starterCell = document.createElement('td');
+            var pointCell = document.createElement('td');
+            starterCell.textContent = "Starters";
+            pointCell.textContent = "Points";
+            row.appendChild(starterCell);
+            row.appendChild(pointCell);
+            startersBody.appendChild(row);
+            // STARTERS
             matchup.starters.forEach(playerId => {
                 const row = document.createElement('tr');
                 const playerCell = document.createElement('td');
                 const pointCell = document.createElement('td');
 
-                playerCell.textContent = playerId.concat(" ", players[playerId]['first_name'], " ", players[playerId]['last_name'], ", ", players[playerId]['fantasy_positions']);
+                playerCell.textContent = players[playerId]['first_name'].concat(" ",players[playerId]['last_name'],", ",players[playerId]['fantasy_positions']);
                 pointCell.textContent = matchup.players_points[playerId];
                 
                 row.appendChild(playerCell);
                 row.appendChild(pointCell);
                 startersBody.appendChild(row);
             });
-            const row = document.createElement('tr');
-            const totalCell = document.createElement('td');
-            const pointCell = document.createElement('td');
+            // TOTAL
+            row = document.createElement('tr');
+            var totalCell = document.createElement('td');
+            pointCell = document.createElement('td');
             totalCell.textContent = "Total";
             pointCell.textContent = matchup['points'];
             row.appendChild(totalCell);
             row.appendChild(pointCell);
             startersBody.appendChild(row);
+
+            row = document.createElement('tr');
+            var benchCell = document.createElement('td');
+            pointCell = document.createElement('td');
+            benchCell.textContent = "Bench";
+            pointCell.textContent = "Points";
+            row.appendChild(benchCell);
+            row.appendChild(pointCell);
+            startersBody.appendChild(row);
+            // BENCH
+            (matchup.players.filter(x => !matchup.starters.includes(x))).forEach(playerId => {
+                const row = document.createElement('tr');
+                const playerCell = document.createElement('td');
+                const pointCell = document.createElement('td');
+                // console.log(players.playerId['first_name']);
+                playerCell.textContent = players[playerId]['first_name'].concat(" ",players[playerId]['last_name'],", ",players[playerId]['fantasy_positions']);
+                // playerCell.textContent = playerId;
+                pointCell.textContent = matchup.players_points[playerId];
+                row.appendChild(playerCell);
+                row.appendChild(pointCell);
+                startersBody.appendChild(row);
+            })
+            // row = document.createElement('tr');
+            // var emptyCell = document.createElement('td');
+            // emptyCell.textContent = "";
+            // row.appendChild(emptyCell);
+            // row.appendChild(emptyCell);
+            // startersBody.appendChild(row);
         }
     });
 };
@@ -147,26 +192,26 @@ const updateStartersInfo = (matchups, players) => {
 //     });
 // };
 
-const updateBenchInfo = (matchups,players) => {
-    const benchBody = document.getElementById("bench-body");
-    benchBody.innerHTML = ''; // Clear table before updating
-    matchups.forEach(matchup => {
-        if (matchup.roster_id == 8) {
-            (matchup.players.filter(x => !matchup.starters.includes(x))).forEach(playerId => {
-                const row = document.createElement('tr');
-                const playerCell = document.createElement('td');
-                const pointCell = document.createElement('td');
-                // console.log(players.playerId['first_name']);
-                playerCell.textContent = playerId.concat(" ",players[playerId]['first_name']," ",players[playerId]['last_name'],", ",players[playerId]['fantasy_positions']);
-                // playerCell.textContent = playerId;
-                pointCell.textContent = matchup.players_points[playerId];
-                row.appendChild(playerCell);
-                row.appendChild(pointCell);
-                benchBody.appendChild(row);
-            })
-        }
-    });
-};
+// const updateBenchInfo = (matchups,players) => {
+//     const benchBody = document.getElementById("bench-body");
+//     // benchBody.innerHTML = ''; // Clear table before updating
+//     matchups.forEach(matchup => {
+//         if (matchup.roster_id == 8) {
+//             (matchup.players.filter(x => !matchup.starters.includes(x))).forEach(playerId => {
+//                 const row = document.createElement('tr');
+//                 const playerCell = document.createElement('td');
+//                 const pointCell = document.createElement('td');
+//                 // console.log(players.playerId['first_name']);
+//                 playerCell.textContent = playerId.concat(" ",players[playerId]['first_name']," ",players[playerId]['last_name'],", ",players[playerId]['fantasy_positions']);
+//                 // playerCell.textContent = playerId;
+//                 pointCell.textContent = matchup.players_points[playerId];
+//                 row.appendChild(playerCell);
+//                 row.appendChild(pointCell);
+//                 benchBody.appendChild(row);
+//             })
+//         }
+//     });
+// };
 
 // Fetch Data
 const refreshData = async () => {
@@ -178,19 +223,33 @@ const refreshData = async () => {
         const leagues = await getLeagues(userID);
         if (!leagues || leagues.length === 0) throw new Error('No leagues found');
 
+        const players = await getPlayers();
+        if (!players) throw new Error('No players found');
+        
+        // for (currentLeague in leagues) {
+        //     const rosters = await getRosters(leagues[currentLeague].league_id);
+        //     if (!rosters) throw new Error('No rosters found');
+
+        //     const matchups = await getMatchups(leagues[currentLeague].league_id);
+        //     if (!matchups) throw new Error('No matchups found');
+            
+        //     // updatePlayerInfo(rosters);
+        //     updateStartersInfo(matchups,players);
+        //     // updateTotalInfo(matchups);
+        //     // updateBenchInfo(matchups,players);
+        // }
+
+
         const rosters = await getRosters(leagues[0].league_id);
         if (!rosters) throw new Error('No rosters found');
 
         const matchups = await getMatchups(leagues[0].league_id);
         if (!matchups) throw new Error('No matchups found');
-        
-        const players = await getPlayers();
-        if (!players) throw new Error('No players found');
 
         // updatePlayerInfo(rosters);
         updateStartersInfo(matchups,players);
         // updateTotalInfo(matchups);
-        updateBenchInfo(matchups,players);
+        // updateBenchInfo(matchups,players);
     } catch (error) {
         console.error("Error in refreshData: ", error);
     } finally {
