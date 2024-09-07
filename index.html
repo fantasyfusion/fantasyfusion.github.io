@@ -3,57 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fantasy Lineups</title>
+    <title>FantasyFusion</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Fantasy Lineups</h1>
-    <form id="weekSelector" onsubmit="handleSubmit(event)">
-    <label for="weeks">Choose a week:</label>
-    <select id="weeks">
-        <option value="1">Week 1</option>
-        <option value="2">Week 2</option>
-        <option value="3">Week 3</option>
-        <option value="4">Week 4</option>
-        <option value="5">Week 5</option>
-        <option value="6">Week 6</option>
-        <option value="7">Week 7</option>
-        <option value="8">Week 8</option>
-        <option value="9">Week 9</option>
-        <option value="10">Week 10</option>
-        <option value="11">Week 11</option>
-        <option value="12">Week 12</option>
-        <option value="13">Week 13</option>
-        <option value="14">Week 14</option>
-        <option value="15">Week 15</option>
-        <option value="16">Week 16</option>
-        <option value="17">Week 17</option>
-    </select>
-    <button type="submit">Submit</button>
-    </form>
-    <br><br>
-    <div id="loading-spinner">Loading...</div>
-    <table id="fantasy-lineup">
-        <!-- <thead>
-            <tr>
-                <th>Starters</th>
-                <th>Points</th>
-            </tr>
-        </thead> -->
-        <tbody id="starters-body">
-        </tbody>
-        <!-- <thead id="total-header">
-        </thead> -->
-        <!-- <thead>
-            <tr>
-                <th>Bench</th>
-                <th>Points</th>
-            </tr>
-        </thead>
-        <tbody id="bench-body">
-        </tbody> -->
-    </table>
+    <!-- Particles.js background container -->
+    <div id="particles-js"></div>
+    
+    <!-- Main content container -->
+    <div class="container">
+        <header>
+            <h1>FantasyFusion</h1>
+        </header>
+        <main>
+            <!-- Button grid container -->
+            <div class="button-container">
+                <a href="./udit/index.html" class="btn">Udit's Sleeper Leagues</a>
+                <a href="./jigar/index.html" class="btn">Jigar's Sleeper Leagues</a>
+                <!-- <a href="https://example3.com" class="btn">Visit Example 3</a>
+                <a href="https://example4.com" class="btn">Visit Example 4</a> -->
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024 FantasyFusion</p>
+        </footer>
+    </div>
 
-    <script src="app.js"></script>
+    <!-- Particles.js library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Custom script for particles.js -->
+    <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FantasyFusion</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>FantasyFusion</h1>
+    <form id="weekSelector" onsubmit="handleSubmit(event)">
+    <label for="weeks">Choose a week:</label>
+    <select id="weeks">
+        <option value="1">Week 1</option>
+        <option value="2">Week 2</option>
+        <option value="3">Week 3</option>
+        <option value="4">Week 4</option>
+        <option value="5">Week 5</option>
+        <option value="6">Week 6</option>
+        <option value="7">Week 7</option>
+        <option value="8">Week 8</option>
+        <option value="9">Week 9</option>
+        <option value="10">Week 10</option>
+        <option value="11">Week 11</option>
+        <option value="12">Week 12</option>
+        <option value="13">Week 13</option>
+        <option value="14">Week 14</option>
+        <option value="15">Week 15</option>
+        <option value="16">Week 16</option>
+        <option value="17">Week 17</option>
+    </select>
+    <button type="submit">Submit</button>
+    </form>
+    <br>
+    <div id="loading-spinner">Loading...</div>
+    <h1 style="text-align:center;">Sunday4Football</h1>
+    <table id="league1lineup">
+        <tbody id="league1">
+        </tbody>
+    </table>
+    <!-- <br><br><br>
+    <h1 style="text-align:center;">Pitt vs. Ohio</h1>
+    <table id="league2lineup">
+        <tbody id="league2">
+        </tbody>
+    </table> -->
+    <!-- <br><br><br>
+    <h1 style="text-align:center;">Masala Men</h1>
+    <table id="league3lineup">
+        <tbody id="league3">
+        </tbody>
+    </table> -->
+    <br><br>
+
+    <script src="app.js"></script>
+</body>
+</html>

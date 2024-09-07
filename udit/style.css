@@ -1,0 +1,45 @@
+/* table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+} */
+
+/* Ensure the table has fixed layout */
+table {
+    table-layout: fixed; /* Makes columns equal width */
+    width: 100%;         /* Adjust the table width */
+    border-collapse: collapse; /* Optional: removes space between cells */
+}
+
+/* Define equal column widths */
+table th, table td {
+    width: 25%;  /* Adjust this value based on the number of columns */
+    padding: 10px;
+    border: 1px solid #ddd; /* Optional: adds a border to cells */
+    text-align: center;     /* Optional: center-aligns the text */
+}
+
+/* Optional styling for header */
+table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.neon {
+    background-color: yellow;
+}
+#loading-spinner {
+    display: none;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Raleway', sans-serif;
+    background-color: #101820;  /* Dark background for space-like effect */
+    color: white;
+    /* overflow: hidden;  Prevent scrolling */
+}
